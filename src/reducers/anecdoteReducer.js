@@ -21,13 +21,19 @@ const asObject = (anecdote) => {
 const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
+  if (action.type === 'NEW_ANECDOTE') {
+    console.log("hello new")
+    console.log(asObject(action.data.content))
+    console.log(state.concat(asObject(action.data.content)))
+    return state.concat(asObject(action.data.content))
+  }
   if (action.anecdoteId) {
-    const votedAnecdote = state.find(anecdote => anecdote.id == action.anecdoteId)
+    const votedAnecdote = state.find(anecdote => anecdote.id === action.anecdoteId)
     const index = state.indexOf(votedAnecdote)
     let tempAnecdote = { ...votedAnecdote }
     tempAnecdote.votes += 1
     state = state.filter(anecdote => (anecdote.id !== action.anecdoteId))
-    state.splice(index, 0, tempAnecdote) 
+    state.splice(index, 0, tempAnecdote)
   }
   return state
 }
