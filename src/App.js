@@ -2,8 +2,11 @@ import React from 'react';
 
 const App = (props) => {
   const anecdotes = props.store.getState()
-
   const vote = (id) => {
+    props.store.dispatch({
+      type : 'VOTE',
+      anecdoteId: id
+    })
     console.log('vote', id)
   }
 

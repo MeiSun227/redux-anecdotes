@@ -1,3 +1,4 @@
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -20,10 +21,15 @@ const asObject = (anecdote) => {
 const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
-
+  if (action.anecdoteId) {
+    const votedAnecdote = state.find(anecdote => anecdote.id == action.anecdoteId)
+    const index = state.indexOf(votedAnecdote)
+    let tempAnecdote = { ...votedAnecdote }
+    tempAnecdote.votes += 1
+    state = state.filter(anecdote => (anecdote.id !== action.anecdoteId))
+    state.splice(index, 0, tempAnecdote) 
+  }
   return state
 }
 
-export default reducer
+export default reducer  
