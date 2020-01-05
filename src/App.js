@@ -1,24 +1,17 @@
 import React from 'react';
+import { voteAction, createAction } from './reducers/anecdoteReducer'
+
 
 const App = (props) => {
   const anecdotes = props.store.getState()
   const vote = (id) => {
-    props.store.dispatch({
-      type: 'VOTE',
-      anecdoteId: id
-    })
-    console.log('vote', id)
+    props.store.dispatch(voteAction(id))
   }
+
   const createAnecdote = (event) => {
     event.preventDefault()
     const content = event.target.newAnecdote.value
-    console.log("create new")
-    props.store.dispatch({
-      type: 'NEW_ANECDOTE',
-      data: {
-        content: content
-      }
-    })
+    props.store.dispatch(createAction(content))
     event.target.newAnecdote.value = ''
   }
 
