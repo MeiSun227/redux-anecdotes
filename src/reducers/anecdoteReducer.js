@@ -22,9 +22,6 @@ const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
   if (action.type === 'NEW_ANECDOTE') {
-    console.log("hello new")
-    console.log(asObject(action.data.content))
-    console.log(state.concat(asObject(action.data.content)))
     return state.concat(asObject(action.data.content))
   }
   if (action.anecdoteId) {
@@ -35,6 +32,7 @@ const reducer = (state = initialState, action) => {
     state = state.filter(anecdote => (anecdote.id !== action.anecdoteId))
     state.splice(index, 0, tempAnecdote)
   }
+  state.sort(((a, b) => b.votes - a.votes))
   return state
 }
 
