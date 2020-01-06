@@ -20,7 +20,7 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
-const reducer = (state = initialState, action) => {
+const anecdoteReducer = (state = initialState, action) => {
   if (action.type === 'NEW_ANECDOTE') {
     return state.concat(asObject(action.data.content))
   }
@@ -52,4 +52,4 @@ export const createAction = (anedoteContent) => {
   }
 }
 
-export default reducer
+export default anecdoteReducer
