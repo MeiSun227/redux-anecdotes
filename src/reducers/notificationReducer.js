@@ -6,9 +6,9 @@ const initialState = {
 
 const notificationReducer = (state = initialState, action) => {
   if (action.type === 'NOTIFICATION') {
-    console.log(action.anecdoteId)
-    console.log(action.anecdotes)
+    console.log(action.type)
     const foundAnecdote = action.anecdotes.find(anecdote => action.anecdoteId === anecdote.id)
+    console.log('you voted ' + '\'' + foundAnecdote.content +'\'')
     return {message: 'you voted ' + '\'' + foundAnecdote.content +'\'' , visibility: true}
   }
   if (action.type === 'REMOVE_NOTIFICATION') {

@@ -8,12 +8,13 @@ const Notification = (props) => {
     borderWidth: 1
   }
 
+  console.log("HELLOOO")
   console.log(props)
 
-  if (props.visibility) {
+  if (props.notification.visibility) {
     return (
       <div style={style}>
-        {props.message}
+        {props.notification.message}
       </div>
     )
   } else {
@@ -23,10 +24,10 @@ const Notification = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    message: state.message,
-    visibility: state.visibility
-  }
-}
+    notification: state.notification
+  };
+};
 
-const ConnectedNotification = connect(mapStateToProps)(Notification)
-export default ConnectedNotification
+const mapDispatchToProps = {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notification)
