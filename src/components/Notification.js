@@ -7,15 +7,15 @@ const Notification = (props) => {
     borderWidth: 1
   
   }
-  const kissa = {
-    name: 'meow',
-    food: 'kala'
+  if (props.store.getState().notifications.visibility) {
+    return (
+      <div style={style}>
+        {props.store.getState().notifications.message}
+      </div>
+    )
+  } else {
+    return (<></>)
   }
-  return (
-    <div style={style}>
-      {props.store.getState().notifications}
-    </div>
-  )
 }
 
 export default Notification
