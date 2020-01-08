@@ -24,7 +24,7 @@ const anecdoteReducer = (state = initialState, action) => {
   if (action.type === 'NEW_ANECDOTE') {
     return state.concat(asObject(action.data.content))
   }
-  if (action.anecdoteId) {
+  if (action.anecdoteId && action.type === 'VOTE') {
     const votedAnecdote = state.find(anecdote => anecdote.id === action.anecdoteId)
     const index = state.indexOf(votedAnecdote)
     let tempAnecdote = { ...votedAnecdote }
