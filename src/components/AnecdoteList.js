@@ -5,18 +5,16 @@ import { notificationAction, removeNotificationAction } from '../reducers/notifi
 
 
 const AnecdoteList = (props) => {
-  const anecdotes = props.anecdotes
-  const filter = props.filter
-  const filteredAnecdotes = anecdotes.filter((anecdote) => anecdote.content.includes(filter))
+
   const vote = (id) => {
     props.voteAction(id)
-    props.notificationAction(id, anecdotes)
+    props.notificationAction(id, props.anecdotes)
     setTimeout(() => { props.removeNotificationAction() }, 5000)
   }
   return (
     <>
       <h2>Anecdotes</h2>
-      {filteredAnecdotes.map(anecdote =>
+      {anecdotesToShow(props).map(anecdote =>
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
@@ -30,6 +28,11 @@ const AnecdoteList = (props) => {
     </>
   )
 }
+
+const anecdotesToShow =(props)=>{
+  return props.anecdotes.filter((anecdote) => anecdote.content.includes(props.filter))
+}
+
 const mapStateToProps = (state) => {
   return {
     anecdotes: state.anecdotes,
