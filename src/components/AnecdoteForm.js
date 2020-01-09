@@ -9,8 +9,7 @@ const AnecdoteForm = (props)=>{
     event.preventDefault()
     const content = event.target.newAnecdote.value
     event.target.newAnecdote.value = ''
-    const newAnecdote = await anecdotesService.createNewAnecdote({content: content, votes: 0})
-    props.createAction(newAnecdote)
+    props.createAction({content: content, votes: 0})
   }
   return(
     <>
@@ -32,4 +31,5 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = { createAction }
 
 const ConnectedAnecdoteForm = connect(mapStateToProps, mapDispatchToProps)(AnecdoteForm)
+
 export default ConnectedAnecdoteForm 
