@@ -6,9 +6,9 @@ import { notificationAction, removeNotificationAction } from '../reducers/notifi
 
 const AnecdoteList = (props) => {
 
-  const vote = (id) => {
-    props.voteAction(id)
-    props.notificationAction(id, props.anecdotes)
+  const vote = (anecdote) => {
+    props.voteAction(anecdote)
+    props.notificationAction(anecdote)
     setTimeout(() => { props.removeNotificationAction() }, 5000)
   }
   return (
@@ -21,7 +21,7 @@ const AnecdoteList = (props) => {
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
+            <button onClick={() => vote(anecdote)}>vote</button>
           </div>
         </div>
       )}

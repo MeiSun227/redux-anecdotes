@@ -8,9 +8,6 @@ const Notification = (props) => {
     borderWidth: 1
   }
 
-  console.log("HELLOOO")
-  console.log(props)
-
   if (props.notification.visibility) {
     return (
       <div style={style}>

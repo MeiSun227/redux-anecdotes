@@ -27,12 +27,9 @@ const anecdoteReducer = (state = [], action) => {
     case 'INIT_ANECDOTES':
       return action.data
     case 'VOTE':
-      const votedAnecdote = state.find(anecdote => anecdote.id === action.anecdoteId)
-      const index = state.indexOf(votedAnecdote)
-      let tempAnecdote = { ...votedAnecdote }
-      tempAnecdote.votes += 1
-      state = state.filter(anecdote => (anecdote.id !== action.anecdoteId))
-      state.splice(index, 0, tempAnecdote)
+      const index = state.indexOf(action.data)
+      state = state.filter(anecdote => (anecdote.id !== action.data.id))
+      state.splice(index, 0, action.data)
       state.sort(((a, b) => b.votes - a.votes))
   }
   return state
@@ -47,10 +44,16 @@ export const initializeAnecdotes = () => {
     })
   }
 }
-export const voteAction = (id) => {
-  return {
-    type: 'VOTE',
-    anecdoteId: id
+export const voteAction = anecdote => {
+  return async dispatch => {
+    console.log(anecdote)
+    anecdote.votes += 1
+    const updatedAnecdote = await anecdotesService.updateAnecdote(anecdote)
+    console.log(updatedAnecdote)
+    dispatch({
+      type: 'VOTE',
+      data: updatedAnecdote
+    })
   }
 }
 
