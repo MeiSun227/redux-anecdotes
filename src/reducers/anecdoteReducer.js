@@ -21,35 +21,42 @@ const asObject = (anecdote) => {
 const initialState = anecdotesAtStart.map(asObject)
 
 const anecdoteReducer = (state = [], action) => {
-  if (action.type === 'NEW_ANECDOTE') {
-    return state.concat(action.data)
+  switch (action.type) {
+    case 'NEW_ANECDOTE':
+      return [...state, action.data]
+    case 'INIT_ANECDOTES':
+      return action.data
+    case 'VOTE':
+      const votedAnecdote = state.find(anecdote => anecdote.id === action.anecdoteId)
+      const index = state.indexOf(votedAnecdote)
+      let tempAnecdote = { ...votedAnecdote }
+      tempAnecdote.votes += 1
+      state = state.filter(anecdote => (anecdote.id !== action.anecdoteId))
+      state.splice(index, 0, tempAnecdote)
+      state.sort(((a, b) => b.votes - a.votes))
   }
-  if (action.anecdoteId && action.type === 'VOTE') {
-    const votedAnecdote = state.find(anecdote => anecdote.id === action.anecdoteId)
-    const index = state.indexOf(votedAnecdote)
-    let tempAnecdote = { ...votedAnecdote }
-    tempAnecdote.votes += 1
-    state = state.filter(anecdote => (anecdote.id !== action.anecdoteId))
-    state.splice(index, 0, tempAnecdote)
-  }
-  state.sort(((a, b) => b.votes - a.votes))
   return state
 }
 
-export const voteAction = (id) => {
-  return {
-    type: 'VOTE',
-    anecdoteId: id
-  }
-}
-
-export const createAction = (anedoteContent) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    data: {
-      content: anedoteContent
+  export const initializeAnecdotes = (anecdotes) => {
+    return {
+      type: 'INIT_ANECDOTES',
+      data: anecdotes,
     }
   }
-}
 
-export default anecdoteReducer
+  export const voteAction = (id) => {
+    return {
+      type: 'VOTE',
+      anecdoteId: id
+    }
+  }
+
+  export const createAction = (anecdote) => {
+    return {
+      type: 'NEW_ANECDOTE',
+      data: anecdote
+    }
+  }
+
+  export default anecdoteReducer
